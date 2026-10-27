@@ -486,6 +486,177 @@
           }
         }
       ]
+    },
+    {
+      "name": "Test 10: Retrieve All Brands",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brands",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "brands"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Verify expected brands list', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.be.at.least(1);",
+              "    pm.expect(jsonData[0]).to.have.property('id');",
+              "    pm.expect(jsonData[0]).to.have.property('name');",
+              "    pm.expect(jsonData[0]).to.have.property('code');",
+              "    pm.expect(jsonData[0]).to.have.property('active');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test 11: Filter Brands by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brands?id=1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "brands"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Verify filtered brand by ID', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.eql(1);",
+              "    pm.expect(jsonData[0].id).to.eql(1);",
+              "    pm.expect(jsonData[0].name).to.eql('Renault');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test 12: Filter Brands by Search Query",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brands?q=Renault",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "brands"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "Renault"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Verify filtered brands by query', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.eql(1);",
+              "    pm.expect(jsonData[0].name).to.eql('Renault');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test 13: Filter Brands by Active Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brands?active=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "brands"
+          ],
+          "query": [
+            {
+              "key": "active",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Verify all returned brands are active', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    jsonData.forEach(function(brand) {",
+              "        pm.expect(brand.active).to.be.true;",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
     }
   ]
 }
