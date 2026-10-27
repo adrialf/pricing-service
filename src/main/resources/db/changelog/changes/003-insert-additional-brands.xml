@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-5.0.xsd">
+
+    <changeSet id="003-insert-additional-brands" author="miguelafr">
+        <sql>
+            INSERT INTO PRICES (BRAND_ID, START_DATE, END_DATE, PRICE_LIST, PRODUCT_ID, PRIORITY, PRICE, CURR) VALUES
+            (2, '2020-01-01T00:00:00Z', '2025-12-31T23:59:59Z', 10, 10001, 0, 10.00, 'EUR'),
+            (3, '2020-01-01T00:00:00Z', '2025-12-31T23:59:59Z', 20, 20002, 0, 20.00, 'EUR');
+        </sql>
+        <rollback>
+            DELETE FROM PRICES WHERE brand_id IN (2, 3);
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

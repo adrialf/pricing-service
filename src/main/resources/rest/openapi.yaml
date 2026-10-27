@@ -64,6 +64,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /api/brands:
+    get:
+      summary: Retrieve all brands.
+      operationId: getAllBrands
+      tags:
+        - Brands
+      parameters:
+        - name: id
+          in: query
+          required: false
+          description: Filter brands by ID.
+          schema:
+            type: integer
+            format: int64
+          example: 1
+        - name: active
+          in: query
+          required: false
+          description: Filter brands by active status.
+          schema:
+            type: boolean
+          example: true
+        - name: q
+          in: query
+          required: false
+          description: Filter brands by name, code or description (case-insensitive).
+          schema:
+            type: string
+          example: "Renault"
+      responses:
+        '200':
+          description: Successful retrieval of brands.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BrandResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 components:
   schemas:
     PriceResponse:
@@ -141,3 +186,32 @@ components:
           type: string
           description: Request URI path where the error occurred.
           example: "/api/prices/active"
+    BrandResponse:
+      type: object
+      required:
+        - id
+        - name
+        - code
+        - active
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Brand identifier.
+          example: 1
+        name:
+          type: string
+          description: Commercial name of the brand.
+          example: "Renault"
+        code:
+          type: string
+          description: Unique brand code.
+          example: "RENAULT"
+        description:
+          type: string
+          description: Brand description.
+          example: "Renault brand"
+        active:
+          type: boolean
+          description: Brand status.
+          example: true

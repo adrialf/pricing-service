@@ -25,5 +25,4 @@ public interface PriceRepository {
      */
     List<Price> findByApplicationDateAndProductIdAndBrandId(
             Instant applicationDate, Long productId, Long brandId);
-
 }

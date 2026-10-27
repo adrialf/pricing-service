@@ -7,5 +7,8 @@
 
     <include file="db/changelog/changes/001-create-prices-table.xml"/>
     <include file="db/changelog/changes/002-insert-initial-prices.xml"/>
+    <include file="db/changelog/changes/003-insert-additional-brands.xml"/>
+    <include file="db/changelog/changes/004-create-brands-table.xml"/>
+    <include file="db/changelog/changes/005-add-brand-fk-to-prices.xml"/>
 
 </databaseChangeLog>

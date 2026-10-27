@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-5.0.xsd">
+
+    <changeSet id="004-create-brands-table" author="miguelafr">
+        <sql>
+            CREATE TABLE BRANDS (
+                ID BIGINT PRIMARY KEY,
+                NAME VARCHAR(255) NOT NULL,
+                CODE VARCHAR(100) NOT NULL UNIQUE,
+                DESCRIPTION VARCHAR(500),
+                ACTIVE BOOLEAN NOT NULL
+            );
+
+            INSERT INTO BRANDS (ID, NAME, CODE, DESCRIPTION, ACTIVE) VALUES
+            (1, 'Renault', 'RENAULT', 'Renault brand', TRUE),
+            (2, 'Opel', 'OPEL', 'Opel brand', TRUE),
+            (3, 'Skoda', 'SKD', 'Skoda brand', TRUE);
+        </sql>
+        <rollback>
+            DROP TABLE BRANDS;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
