@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-5.0.xsd">
+
+    <changeSet id="001-create-prices-table" author="miguelafr">
+        <sql>
+            CREATE TABLE PRICES (
+                ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+                BRAND_ID BIGINT NOT NULL,
+                START_DATE TIMESTAMP WITH TIME ZONE NOT NULL,
+                END_DATE TIMESTAMP WITH TIME ZONE NOT NULL,
+                PRICE_LIST BIGINT NOT NULL,
+                PRODUCT_ID BIGINT NOT NULL,
+                PRIORITY INT NOT NULL,
+                PRICE DECIMAL(10, 2) NOT NULL,
+                CURR CHAR(3) NOT NULL
+            );
+
+            CREATE INDEX idx_prices_product_brand_dates ON prices (PRODUCT_ID, BRAND_ID, START_DATE, END_DATE);
+        </sql>
+        <rollback>
+            DROP INDEX idx_prices_product_brand_dates;
+
+            DROP TABLE PRICES;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

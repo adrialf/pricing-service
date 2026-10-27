@@ -1,0 +1,6 @@
+services:
+  pricing-service:
+    image: pricing:1.0.1-SNAPSHOT
+    container_name: pricing-service
+    ports:
+      - "8080:8080"

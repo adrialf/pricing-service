@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: Altia Pricing Service API
+  version: 1.0.0
+  description: API for retrieving the applicable product price based on product ID, brand ID, and application date.
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+paths:
+  /api/prices/active:
+    get:
+      summary: Retrieve the applicable price for a product of a specific brand at a given date.
+      operationId: getApplicablePrice
+      tags:
+        - Prices
+      parameters:
+        - name: applicationDate
+          in: query
+          required: true
+          description: The date and time when the price should apply (ISO 8601 format with timezone offset).
+          schema:
+            type: string
+            format: date-time
+            example: "2020-06-14T10:00:00Z"
+        - name: productId
+          in: query
+          required: true
+          description: The unique identifier of the product.
+          schema:
+            type: integer
+            format: int64
+            example: 35455
+        - name: brandId
+          in: query
+          required: true
+          description: The unique identifier of the brand/chain.
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: Successful retrieval of the applicable price.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+        '400':
+          description: Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No applicable price found for the given criteria.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    PriceResponse:
+      type: object
+      required:
+        - productId
+        - brandId
+        - priceList
+        - startDate
+        - endDate
+        - price
+        - currency
+      properties:
+        productId:
+          type: integer
+          format: int64
+          description: Product identifier.
+          example: 35455
+        brandId:
+          type: integer
+          format: int64
+          description: Brand identifier.
+          example: 1
+        priceList:
+          type: integer
+          format: int64
+          description: Applicable price list identifier.
+          example: 1
+        startDate:
+          type: string
+          format: date-time
+          description: Start date when the price applies.
+          example: "2020-06-14T00:00:00Z"
+        endDate:
+          type: string
+          format: date-time
+          description: End date when the price applies.
+          example: "2020-12-31T23:59:59Z"
+        price:
+          type: number
+          format: double
+          description: Final price.
+          example: 35.50
+        currency:
+          type: string
+          description: Currency code.
+          example: "EUR"
+    ErrorResponse:
+      type: object
+      required:
+        - timestamp
+        - status
+        - error
+        - message
+        - path
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the error occurred (ISO 8601 format).
+          example: "2020-06-14T10:00:00Z"
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+        error:
+          type: string
+          description: HTTP status reason phrase.
+          example: "Not Found"
+        message:
+          type: string
+          description: Detailed human-readable error message.
+          example: "No applicable price found for productId 35455, brandId 1 on 2020-06-14T10:00:00Z"
+        path:
+          type: string
+          description: Request URI path where the error occurred.
+          example: "/api/prices/active"
