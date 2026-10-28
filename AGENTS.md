@@ -1,26 +1,26 @@
 # AGENTS.md
 
-## SDD (Spec Driven Development)
-- This project follows SDD. Before planning or implementing any feature/change, read `docs/constitution.md` (project constitution, non-negotiable principles) and apply it.
-- Specs live in `specs/`: create one subdirectory per feature (e.g. `specs/<feature>/`) and write the specs there (requirements, design, plan, tasks) before touching code. Keep specs up to date as the implementation evolves.
+## SDD (Desarrollo Dirigido por Specs)
+- Este proyecto sigue SDD. Antes de planificar o implementar cualquier feature/cambio, lee `docs/constitution.md` (constitución del proyecto, principios innegociables) y aplícala.
+- Las specs viven en `specs/`: crea un subdirectorio por feature (p. ej. `specs/<feature>/`) y escribe allí las specs (requirements, design, plan, tasks) antes de tocar código. Mantén las specs actualizadas a medida que evoluciona la implementación.
 
-## Architecture
-- Hexagonal: `domain/` (pure, no Spring/JPA), `application/` (ports/use cases/services), `infrastructure/` (adapters/config).
-- API-first: `src/main/resources/rest/openapi.yaml` is the source of truth. `openapi-generator-maven-plugin` (Spring, `interfaceOnly`, `useSpringBoot4`, `useJakartaEe`, `useTags`) generates to `target/generated/openapi/` (`...infrastructure.adapter.input.rest.api`, `...dto`, `...invoker`, `ApiUtil.java`). Regenerate with `./mvnw clean compile`.
-- DB: H2 in-mem (`jdbc:h2:mem:pricingdb`), Liquibase changelog `src/main/resources/db/changelog/db.changelog-master.xml`. `spring.jpa.open-in-view: false`, `show-sql: true`.
+## Arquitectura
+- Hexagonal: `domain/` (puro, sin Spring/JPA), `application/` (ports/casos de uso/servicios), `infrastructure/` (adapters/config).
+- API-first: `src/main/resources/rest/openapi.yaml` es la fuente de verdad. `openapi-generator-maven-plugin` (Spring, `interfaceOnly`, `useSpringBoot4`, `useJakartaEe`, `useTags`) genera en `target/generated/openapi/` (`...infrastructure.adapter.input.rest.api`, `...dto`, `...invoker`, `ApiUtil.java`). Regenera con `./mvnw clean compile`.
+- BD: H2 en memoria (`jdbc:h2:mem:pricingdb`), changelog de Liquibase `src/main/resources/db/changelog/db.changelog-master.xml`. `spring.jpa.open-in-view: false`, `show-sql: true`.
 
-## Run / Dev
-- Local: `./mvnw spring-boot:run` (8080). Endpoint: `GET /api/prices/active?applicationDate,productId,brandId` (UTC normalized). Swagger `/swagger-ui.html`, OpenAPI `/api-docs`. H2 console `/h2-console` (README notes manual `spring-boot-h2console` dep if missing).
-- Docker: `./mvnw spring-boot:build-image` → `pricing:<version>`; `docker compose up -d` / `down`.
+## Ejecución / Dev
+- Local: `./mvnw spring-boot:run` (8080). Endpoint: `GET /api/prices/active?applicationDate,productId,brandId` (normalizado a UTC). Swagger `/swagger-ui.html`, OpenAPI `/api-docs`. Consola H2 `/h2-console` (el README indica la dependencia manual `spring-boot-h2console` si falta).
+- Docker: `./mvnw spring-boot:build-image` → `pricing:<versión>`; `docker compose up -d` / `down`.
 
-## Rules
-- Dates: stored `TIMESTAMP WITH TIME ZONE`, processed as UTC; API inputs normalized to UTC.
-- Priority tie: if multiple active prices share max priority for query → return first record in retrieved collection.
-- Generated code: treat `target/generated/openapi/**` as generated (do not hand-edit). Change OpenAPI spec + regenerate.
+## Reglas
+- Fechas: almacenadas como `TIMESTAMP WITH TIME ZONE`, procesadas en UTC; entradas de la API normalizadas a UTC.
+- Empate de prioridad: si varias fechas activas comparten la prioridad máxima para la consulta → devolver el primer registro de la colección recuperada.
+- Código generado: tratar `target/generated/openapi/**` como generado (no editar a mano). Cambia la spec OpenAPI + regenera.
 
 ## Tests
-- Tags: `unit` (pure), `repository` (`@DataJpaTest`), `e2e` (`@SpringBootTest` + RestAssured).
-- All: `./mvnw clean test`
-- By tag: `./mvnw test -Dgroups=unit|repository|e2e`
-- Single: `./mvnw test -Dtest=ClassName` or `./mvnw test -Dtest=ClassName#method`
-- Postman: `src/test/resources/postman/pricing-service.postman_collection.json` (against live app)
+- Tags: `unit` (puro), `repository` (`@DataJpaTest`), `e2e` (`@SpringBootTest` + RestAssured).
+- Todos: `./mvnw clean test`
+- Por tag: `./mvnw test -Dgroups=unit|repository|e2e`
+- Individual: `./mvnw test -Dtest=NombreClase` o `./mvnw test -Dtest=NombreClase#metodo`
+- Postman: `src/test/resources/postman/pricing-service.postman_collection.json` (contra la app en vivo)
