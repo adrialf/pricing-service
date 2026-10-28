@@ -1,5 +1,9 @@
 # AGENTS.md
 
+## SDD (Spec Driven Development)
+- This project follows SDD. Before planning or implementing any feature/change, read `docs/constitution.md` (project constitution, non-negotiable principles) and apply it.
+- Specs live in `specs/`: create one subdirectory per feature (e.g. `specs/<feature>/`) and write the specs there (requirements, design, plan, tasks) before touching code. Keep specs up to date as the implementation evolves.
+
 ## Architecture
 - Hexagonal: `domain/` (pure, no Spring/JPA), `application/` (ports/use cases/services), `infrastructure/` (adapters/config).
 - API-first: `src/main/resources/rest/openapi.yaml` is the source of truth. `openapi-generator-maven-plugin` (Spring, `interfaceOnly`, `useSpringBoot4`, `useJakartaEe`, `useTags`) generates to `target/generated/openapi/` (`...infrastructure.adapter.input.rest.api`, `...dto`, `...invoker`, `ApiUtil.java`). Regenerate with `./mvnw clean compile`.
