@@ -111,6 +111,7 @@ Define **how your application uses external systems**.
 export interface IOrderRepositoryPort {
   findById(id: OrderId): Promise<Order | null>;
   save(order: Order): Promise<void>;
+  delete(order: Order): Promise<void>;
 }
 
 // application/ports/driven/event_publisher_port.ts
