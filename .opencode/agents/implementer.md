@@ -33,6 +33,7 @@ Recibirás **UNA subtarea concreta** (normalmente con id, descripción, ficheros
 
 - Escribe el código y los tests necesarios para cumplir los criterios de aceptación de TU subtarea.
 - Si necesitas tocar más ficheros de los previstos en la subtarea, hazlo solo si es imprescindible y refléjalo en tu informe final.
+- Manten actualizad la colección de postman del directorio src/test/resources/postman
 
 ## Verificación propia
 
