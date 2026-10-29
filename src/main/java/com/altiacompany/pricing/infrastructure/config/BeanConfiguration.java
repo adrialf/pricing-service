@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Configuration;
 
 import com.altiacompany.pricing.application.port.input.GetBrandsUseCase;
 import com.altiacompany.pricing.application.port.input.GetPriceUseCase;
+import com.altiacompany.pricing.application.port.input.GetProductsUseCase;
 import com.altiacompany.pricing.application.port.output.BrandRepository;
 import com.altiacompany.pricing.application.port.output.PriceRepository;
+import com.altiacompany.pricing.application.port.output.ProductRepository;
 import com.altiacompany.pricing.application.service.GetBrandsService;
 import com.altiacompany.pricing.application.service.GetPriceService;
+import com.altiacompany.pricing.application.service.GetProductsService;
 import com.altiacompany.pricing.domain.service.PriceSelector;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -32,6 +35,11 @@ public class BeanConfiguration {
     @Bean
     public GetBrandsUseCase getBrandsUseCase(BrandRepository brandRepository) {
         return new GetBrandsService(brandRepository);
+    }
+
+    @Bean
+    public GetProductsUseCase getProductsUseCase(ProductRepository productRepository) {
+        return new GetProductsService(productRepository);
     }
 
     @Bean

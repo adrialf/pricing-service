@@ -10,5 +10,6 @@
     <include file="db/changelog/changes/003-insert-additional-brands.xml"/>
     <include file="db/changelog/changes/004-create-brands-table.xml"/>
     <include file="db/changelog/changes/005-add-brand-fk-to-prices.xml"/>
+    <include file="db/changelog/changes/006-create-products-table.xml"/>
 
 </databaseChangeLog>

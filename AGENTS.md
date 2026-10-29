@@ -2,7 +2,7 @@
 
 ## SDD (Desarrollo Dirigido por Specs)
 - Este proyecto sigue SDD. Antes de planificar o implementar cualquier feature/cambio, lee `docs/constitution.md` (constitución del proyecto, principios innegociables) y aplícala.
-- Las specs viven en `specs/`: crea un subdirectorio por feature (p. ej. `specs/<feature>/`) y escribe allí las specs (requirements, design, plan, tasks) antes de tocar código. Mantén las specs actualizadas a medida que evoluciona la implementación.
+- Las specs viven en `specs/`: crea un subdirectorio por feature con el nombre precedido de un número incremental de 3 dígitos (p. ej. `specs/<NNN>-<feature>/` → `specs/001-products-list/`) y escribe allí las specs (requirements, design, plan, tasks) antes de tocar código. El número es consecutivo al último existente. Mantén las specs actualizadas a medida que evoluciona la implementación.
 
 ## Arquitectura
 - Hexagonal: `domain/` (puro, sin Spring/JPA), `application/` (ports/casos de uso/servicios), `infrastructure/` (adapters/config).

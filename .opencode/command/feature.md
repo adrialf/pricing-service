@@ -22,7 +22,7 @@ $ARGUMENTS
    - Reglas de negocio de alto nivel (sin hablar de tablas, endpoints ni frameworks): condiciones, prioridades, estados, límites.
    - Fuera de alcance (what NOT to do) y supuestos.
 3. **Validación**: presenta el borrador resumido al usuario y confirma que refleja su intención antes de persistirlo.
-4. **Persistir la semilla**: crea `specs/<feature>/feature.md` (nombre de feature en kebab-case, inferior a 4 palabras si es posible) con la plantilla de abajo, completa y fiel a lo elicitado.
+4. **Persistir la semilla**: crea `specs/<NNN>-<feature>/feature.md` (nombre de feature en kebab-case, inferior a 4 palabras si es posible; directorio precedido de un número incremental de 3 dígitos consecutivo al último existente, p. ej. `specs/001-products-list/`) con la plantilla de abajo, completa y fiel a lo elicitado.
 5. **Cierre**: recuerda al usuario el siguiente paso: invocar la fase de planificación (con el coordinador) para que el `planner` transforme esta semilla en la spec formal (`requirements.md`, `design.md`, `plan.md`, `tasks.md`). NO lances el planner por tu cuenta: la semilla es solo semilla hasta que el usuario dé el visto bueno.
 
 ## Plantilla de `feature.md`

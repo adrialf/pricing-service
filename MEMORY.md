@@ -38,7 +38,7 @@ Mantén este fichero actualizado cuando cambien el stack, las convenciones o el 
   - `infrastructure/` — `adapter/input/rest` (controllers, mappers REST, `exception/GlobalExceptionHandler`), `adapter/output/persistence` (entidades JPA, mappers, repositorios Spring Data, adapters de repositorio que implementan los puertos de salida), `config/` (wiring de beans).
 - **Regla de dependencias:** infrastructure → application → domain. El dominio no depende de nada externo.
 - **API-first:** `src/main/resources/rest/openapi.yaml` es la única fuente de verdad de los contratos REST. El código generado en `target/generated/openapi/**` nunca se edita a mano; se cambia la spec y se regenera con `./mvnw clean compile`.
-- **Spec Driven Development (SDD):** leer `docs/constitution.md` antes de planificar/implementar; las specs viven en `specs/<feature>/` (requirements, design, plan, tasks) y se escriben antes de tocar código.
+- **Spec Driven Development (SDD):** leer `docs/constitution.md` antes de planificar/implementar; las specs viven en `specs/<NNN>-<feature>/` (requirements, design, plan, tasks), con número incremental de 3 dígitos consecutivo al último existente (p. ej. `specs/001-products-list/`) y se escriben antes de tocar código.
 - **Fechas y tiempo:** almacenadas como `TIMESTAMP WITH TIME ZONE`, procesadas como `java.time.Instant` UTC; toda entrada de fecha de la API se normaliza a UTC.
 - **Desempate en la selección de precio:** a igualdad de prioridad máxima, devolver el primer registro de la colección recuperada (comportamiento documentado y determinista).
 - `spring.jpa.open-in-view=false`; `show-sql=true` (H2 local).
@@ -65,7 +65,7 @@ Mantén este fichero actualizado cuando cambien el stack, las convenciones o el 
 - CHANGELOG: [Keep a Changelog](https://keepachangelog.com) + [SemVer](https://semver.org); documentar cambios relevantes bajo `## [version] - YYYY-MM-DD` (ver `CHANGELOG.md`).
 - Verificación antes de dar por terminado el trabajo: `./mvnw clean test`; por tag `./mvnw test -Dgroups=unit|repository|e2e`; por clase `./mvnw test -Dtest=NombreClase`.
 - Los tests van etiquetados: `@Tag("unit")` (puro), `@Tag("repository")` (`@DataJpaTest`), `@Tag("e2e")` (`@SpringBootTest` + RestAssured).
-- Nunca commitear secretos; solo commitear cuando el usuario lo pida explícitamente.
+- Nunca commitear secretos. **Ningún commit automático por agentes durante el flujo SDD: los commits son siempre un paso manual que hace el propietario humano** (regla explícita del propietario, 2026-10-28). Solo commitear cuando el usuario lo pida explícitamente.
 
 ---
 
@@ -75,11 +75,14 @@ Mantén este fichero actualizado cuando cambien el stack, las convenciones o el 
   - Caso de uso de consulta de precio (+ `PriceSelector` en dominio) y listado de brands (soporte de brands añadido, commit `FUNCT - Support to brands`).
   - Adapters REST (Price + Brand), manejador global de excepciones, persistencia H2/Liquibase, Swagger + colección Postman, imagen/compose Docker.
   - Tests: unit (servicios, `PriceSelector`), repository (`SpringDataPriceRepositoryTest`), e2e (controllers de Price + Brand).
+  - **Feature 001-products-list completa T1-T12 (validada por reviewer; pendiente de commit manual):** endpoint `GET /api/products` (listado con filtro `q` parcial case-insensitive sobre name/description, 200 con lista vacía), OpenAPI `/api/products` + `ProductResponse` (codegen), dominio puro `Product`, puertos `GetProductsUseCase`/`GetProductsQuery`/`ProductRepository` (solo `findAll()`, sin `findById` por YAGNI), `GetProductsService` (filtrado en memoria null-safe), persistencia (`ProductEntity`/`SpringDataProductRepository`/`ProductPersistenceMapper`/`ProductRepositoryAdapter`), changeset Liquibase `006-create-products-table.xml` (tabla + seed de 3 productos: 35455/1/2) e include en master, wiring en `BeanConfiguration`, `CHANGELOG.md` bajo `[Unreleased]`. Tests: `GetProductsServiceTest` (unit, 6 casos), `ProductControllerE2ETest` (e2e, 4 escenarios, aserciones orden-agnósticas). Suite completa: 38 tests en verde. T12: colección Postman con `Test 14: Retrieve All Products` y `Test 15: Filter Products by Search Query` (patrón de brands réplicable).
 - **Estado del proceso:**
-  - Flujo SDD definido en `AGENTS.md`; `docs/constitution.md` es el doc normativo; `specs/` es el hogar de las specs (vacío — aún no hay specs de features).
+  - Flujo SDD definido en `AGENTS.md`; `docs/constitution.md` es el doc normativo; `specs/` usa directorios numerados `specs/<NNN>-<feature>/` (convención recién adaptada).
+  - Feature 001 (`001-products-list`) con SDD completo ejecutado: semilla elicitada → specs formales (requirements/design/plan/tasks) → implementación por lotes con reviewer → suite verde. **Regla del propietario: ningún commit automático por agentes; el commit es siempre manual.** Commit pendiente sugerido: `FUNCT - Support to products listing`.
   - Equipos de agentes SDD en `.opencode/agents/`: `coordinador` (primary, orquesta el flujo), `planner`, `implementer`, `reviewer` (subagents).
   - Versión `1.0.1-SNAPSHOT` en `develop`; últimos commits: adopción de SDD y reestructuración de la carpeta de agents.
 - **Abiertas / candidatas (a fecha de redacción):**
-  - Aún no hay specs de features en `specs/` — las próximas features deberían empezar ahí.
-  - Trabajo posible: tests unitarios directos de los adapters de repositorio (`BrandRepositoryAdapter`/`PriceRepositoryAdapter`), nuevas features vía el flujo SDD (spec → design → plan → tasks → código).
+  - La próxima feature deberá usar `specs/002-<feature>/`.
+  - Deuda técnica detectada por reviewer (fuera de la feature 001): `BrandControllerE2ETest` asume orden de la colección (`[0].id`) en contra de R5 de listados — corregir a aserciones orden-agnósticas en otra feature; `BrandRepository.findById` sin uso (YAGNI); `CHANGELOG.md` solo registra la release 1.0.0 mientras el artifact es `1.0.1-SNAPSHOT` (regularizar versión); warning de deprecación preexistente en `BrandController`.
+  - Trabajo posible: tests unitarios directos de los adapters de repositorio (`BrandRepositoryAdapter`/`PriceRepositoryAdapter`/`ProductRepositoryAdapter`), nuevas features vía el flujo SDD (spec → design → plan → tasks → código).
 - **No presente:** pipelines de CI (no hay `.github/workflows`), OpenShift, Kafka, Redis — añadir aquí cuando se introduzcan.

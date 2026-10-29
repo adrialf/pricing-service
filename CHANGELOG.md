@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- REST endpoint `GET /api/products` to list the product catalog with an optional free-text filter `q` (case-insensitive partial match).
+
 ## [1.0.0] - 2026-07-23
 
 ### Added
