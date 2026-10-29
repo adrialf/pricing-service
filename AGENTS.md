@@ -17,6 +17,7 @@
 - Fechas: almacenadas como `TIMESTAMP WITH TIME ZONE`, procesadas en UTC; entradas de la API normalizadas a UTC.
 - Empate de prioridad: si varias fechas activas comparten la prioridad máxima para la consulta → devolver el primer registro de la colección recuperada.
 - Código generado: tratar `target/generated/openapi/**` como generado (no editar a mano). Cambia la spec OpenAPI + regenera.
+- Commits: nunca automáticos. Ningún commit por agentes; el commit es siempre un paso manual del propietario humano. Solo commitear si el usuario lo pide explícitamente.
 
 ## Tests
 - Tags: `unit` (puro), `repository` (`@DataJpaTest`), `e2e` (`@SpringBootTest` + RestAssured).

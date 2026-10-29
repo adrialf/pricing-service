@@ -50,4 +50,3 @@ Nunca asumas que el subagente "sabe de qué va la feature".
 
 - No marques una subtarea como completada solo porque el implementer lo diga: exige veredicto del reviewer.
 - Al terminar la feature: resume al usuario (qué se implementó, estado de tests, specs actualizadas) y sugiere siguientes pasos.
-- No hagas commit salvo que el usuario lo pida explícitamente.

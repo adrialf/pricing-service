@@ -45,4 +45,3 @@ Al terminar, ejecuta la verificación de la subtarea, como mínimo:
 
 - Marca tu subtarea como completada en `specs/<feature>/tasks.md` (`[x]`) con una nota breve de lo implementado. No toques otras subtareas del tasks.md.
 - Informe final: qué ficheros has creado/modificado, decisiones tomadas, resultado de los comandos de verificación y cualquier desviación respecto a la subtarea.
-- **Prohibido**: hacer commit, editar `target/generated/openapi/**`, modificar `docs/constitution.md`, implementar subtareas ajenas.
