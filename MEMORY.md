@@ -60,8 +60,6 @@ Mantén este fichero actualizado cuando cambien el stack, las convenciones o el 
 
 ## 4. Convenciones de Git y desarrollo
 
-- Ramas: `master` es la rama estable/por defecto; el trabajo actual ocurre en `develop`.
-- Mensajes de commit: `PREFIJO - Descripción corta` (imperativo, sin cuerpo). Prefijos observados: `FUNCT` (features/comportamiento), `RESTRUCT` (movimientos/renombres/organización). Mantén este estilo.
 - CHANGELOG: [Keep a Changelog](https://keepachangelog.com) + [SemVer](https://semver.org); documentar cambios relevantes bajo `## [version] - YYYY-MM-DD` (ver `CHANGELOG.md`).
 - Verificación antes de dar por terminado el trabajo: `./mvnw clean test`; por tag `./mvnw test -Dgroups=unit|repository|e2e`; por clase `./mvnw test -Dtest=NombreClase`.
 - Los tests van etiquetados: `@Tag("unit")` (puro), `@Tag("repository")` (`@DataJpaTest`), `@Tag("e2e")` (`@SpringBootTest` + RestAssured).
