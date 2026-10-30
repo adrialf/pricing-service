@@ -1,5 +1,8 @@
 # AGENTS.md
 
+## Descripción del proyecto
+**Pricing Service**: microservicio RESTful (Spring Boot 4, Java 25) para consultar el precio aplicable de un producto según fecha de aplicación, ID de producto e ID de marca (`GET /api/prices/active`). Stack: H2 en memoria + Liquibase, OpenAPI Generator, Springdoc (Swagger), RestAssured. Dockerizado (`pricing:<versión>`).
+
 ## SDD (Desarrollo Dirigido por Specs)
 - Este proyecto sigue SDD. Antes de planificar o implementar cualquier feature/cambio, lee `docs/constitution.md` (constitución del proyecto, principios innegociables) y aplícala.
 - Las specs viven en `specs/`: crea un subdirectorio por feature con el nombre precedido de un número incremental de 3 dígitos (p. ej. `specs/<NNN>-<feature>/` → `specs/001-products-list/`) y escribe allí las specs (requirements, design, plan, tasks) antes de tocar código. El número es consecutivo al último existente. Mantén las specs actualizadas a medida que evoluciona la implementación.
