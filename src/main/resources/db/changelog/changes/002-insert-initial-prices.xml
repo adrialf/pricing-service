@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-5.0.xsd">
 
-    <changeSet id="002-insert-initial-prices" author="miguelafr">
+    <changeSet id="002-insert-initial-prices" author="adrialf">
         <sql>
             INSERT INTO PRICES (BRAND_ID, START_DATE, END_DATE, PRICE_LIST, PRODUCT_ID, PRIORITY, PRICE, CURR) VALUES
             (1, '2020-06-14T00:00:00Z', '2020-12-31T23:59:59Z', 1, 35455, 0, 35.50, 'EUR'),

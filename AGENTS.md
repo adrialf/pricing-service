@@ -13,7 +13,7 @@
 - BD: H2 en memoria (`jdbc:h2:mem:pricingdb`), changelog de Liquibase `src/main/resources/db/changelog/db.changelog-master.xml`. `spring.jpa.open-in-view: false`, `show-sql: true`.
 
 ## Ejecución / Dev
-- Local: `./mvnw spring-boot:run` (8080). Endpoint: `GET /api/prices/active?applicationDate,productId,brandId` (normalizado a UTC). Swagger `/swagger-ui.html`, OpenAPI `/api-docs`. Consola H2 `/h2-console` (el README indica la dependencia manual `spring-boot-h2console` si falta).
+- Local: `./mvnw spring-boot:run` (8080). Endpoint: `GET /api/prices/active?applicationDate,productId,brandId` (normalizado a UTC). Swagger `/swagger-ui.html`, OpenAPI `/api-docs`. Consola H2 `/h2-console`.
 - Docker: `./mvnw spring-boot:build-image` → `pricing:<versión>`; `docker compose up -d` / `down`.
 
 ## Reglas
